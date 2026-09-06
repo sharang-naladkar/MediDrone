@@ -1,0 +1,39 @@
+# Version catalog for dependencies
+[versions]
+androidGradlePlugin = "8.1.0"
+kotlin = "1.8.22"
+compose = "1.4.3"
+coroutines = "1.7.3"
+hilt = "2.47"
+room = "2.5.2"
+retrofit = "2.9.0"
+okhttp = "4.11.0"
+moshi = "1.15.0"
+navigation = "2.6.0"
+play-services-location = "21.0.1"
+firebase-bom = "32.0.0"
+mqtt = "1.2.0"
+
+[libraries]
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "kotlin" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose" }
+activity-compose = { module = "androidx.activity:activity-compose:1.7.2", version.ref = "compose" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+Hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+Hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+

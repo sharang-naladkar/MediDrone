@@ -41,13 +41,13 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
-            buildConfigField("String", "BASE_API_URL", '"https://demo.api.example.com/"')
+            buildConfigField("String", "BASE_API_URL", "\"https://demo.api.example.com/\"")
             buildConfigField("boolean", "USE_MOCKS", "true")
             manifestPlaceholders["MAPS_API_KEY"] = ""
         }
         create("prod") {
             dimension = "environment"
-            buildConfigField("String", "BASE_API_URL", '"https://api.example.com/"')
+            buildConfigField("String", "BASE_API_URL", "\"https://api.example.com/\"")
             buildConfigField("boolean", "USE_MOCKS", "false")
             manifestPlaceholders["MAPS_API_KEY"] = ""
         }
@@ -109,6 +109,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    implementation("androidx.security:security-crypto:1.1.0-alpha03")
 
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation(platform("com.google.firebase:firebase-bom:32.0.0"))

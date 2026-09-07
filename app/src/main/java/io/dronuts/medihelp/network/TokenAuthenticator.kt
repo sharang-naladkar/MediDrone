@@ -21,7 +21,8 @@ class TokenAuthenticator(private val retrofitForAuth: Retrofit, private val toke
             val api = retrofitForAuth.create(ApiService::class.java)
             val refreshResp = runBlocking { api.refresh(RefreshRequest(refreshToken)) }
             tokenStore.saveTokens(refreshResp.access_token, refreshResp.refresh_token, refreshResp.expires_in)
-            response.request.newBuilder().header("Authorization", "******").build()
+            // Return a new request with the refreshed access token
+            response.request.newBuilder().header("Authorization", "Bearer ${refreshResp.access_token}").build()
         } catch (e: Exception) {
             // Refresh failed, give up
             null

@@ -13,8 +13,9 @@ import io.dronuts.medihelp.auth.SecureTokenStore
 import io.dronuts.medihelp.data.repository.IncidentRepository
 import io.dronuts.medihelp.data.repository.MockIncidentRepository
 import io.dronuts.medihelp.data.repository.NetworkIncidentRepository
-import io.dronuts.medihelp.mqtt.MqttClient
-import io.dronuts.medihelp.mqtt.MockMqttClient
+import io.dronuts.medihelp.data.mqtt.MqttClient
+import io.dronuts.medihelp.data.mqtt.MockMqttClient
+import io.dronuts.medihelp.data.mqtt.PahoMqttAdapter
 import io.dronuts.medihelp.mqtt.PahoMqttClient
 import io.dronuts.medihelp.network.ApiService
 import io.dronuts.medihelp.network.AuthInterceptor
@@ -74,7 +75,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideMqttClient(@ApplicationContext ctx: Context): MqttClient {
-        return if (BuildConfig.FLAVOR == "demo") MockMqttClient() else PahoMqttClient(ctx, BuildConfig.BASE_API_URL)
+        return if (BuildConfig.FLAVOR == "demo") MockMqttClient() else PahoMqttAdapter(PahoMqttClient(ctx, BuildConfig.BASE_API_URL))
     }
 
     @Provides

@@ -3,20 +3,22 @@ package io.dronuts.medihelp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.dronuts.medihelp.data.mqtt.MqttClient
 import io.dronuts.medihelp.data.local.entities.IncidentEntity
 import io.dronuts.medihelp.data.repository.IncidentRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class TelemetryPoint(val lat: Double, val lng: Double, val altitude: Double, val battery: Int)
 
 @HiltViewModel
-class IncidentViewModel @Inject constructor(private val repo: IncidentRepository) : ViewModel() {
+class IncidentViewModel @Inject constructor(
+    private val repo: IncidentRepository,
+    private val mqttClient: MqttClient
+) : ViewModel() {
     private val _history = MutableStateFlow<List<IncidentEntity>>(emptyList())
     val history = _history.asStateFlow()
 
@@ -49,20 +51,5 @@ class IncidentViewModel @Inject constructor(private val repo: IncidentRepository
         }
     }
 
-    fun simulateTelemetryFlow(incidentId: String): Flow<TelemetryPoint> = flow {
-        // simulate a path from a dispatch point to user's location
-        val path = listOf(
-            TelemetryPoint(12.9710, 77.5946, 10.0, 95),
-            TelemetryPoint(12.9712, 77.5948, 30.0, 92),
-            TelemetryPoint(12.9716, 77.5952, 60.0, 88),
-            TelemetryPoint(12.9720, 77.5958, 80.0, 82),
-            TelemetryPoint(12.9726, 77.5964, 40.0, 75),
-            TelemetryPoint(12.9730, 77.5969, 20.0, 66),
-            TelemetryPoint(12.9734, 77.5973, 5.0, 55)
-        )
-        for (p in path) {
-            emit(p)
-            delay(1200)
-        }
-    }
+    fun simulateTelemetryFlow(incidentId: String): Flow<TelemetryPoint> = mqttClient.telemetry(incidentId)
 }

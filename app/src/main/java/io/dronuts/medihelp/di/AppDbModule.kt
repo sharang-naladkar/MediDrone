@@ -1,21 +1,17 @@
-package io.dronuts.medihelp
+package io.dronuts.medihelp.di
 
-import android.content.Context
-import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.dronuts.medihelp.data.local.AppDatabase
+import io.dronuts.medihelp.data.local.IncidentDao
 import javax.inject.Singleton
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppDbModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
-        return Room.databaseBuilder(appContext, AppDatabase::class.java, "medihelp-db").build()
-    }
+    fun provideIncidentDao(database: AppDatabase): IncidentDao = database.incidentDao()
 }

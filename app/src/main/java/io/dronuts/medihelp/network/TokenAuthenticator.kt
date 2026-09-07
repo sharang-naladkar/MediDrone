@@ -1,6 +1,7 @@
 package io.dronuts.medihelp.network
 
 import io.dronuts.medihelp.auth.SecureTokenStore
+import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -18,9 +19,9 @@ class TokenAuthenticator(private val retrofitForAuth: Retrofit, private val toke
         val refreshToken = tokenStore.refreshToken() ?: return null
         return try {
             val api = retrofitForAuth.create(ApiService::class.java)
-            val refreshResp = api.refresh(RefreshRequest(refreshToken))
+            val refreshResp = runBlocking { api.refresh(RefreshRequest(refreshToken)) }
             tokenStore.saveTokens(refreshResp.access_token, refreshResp.refresh_token, refreshResp.expires_in)
-            response.request.newBuilder().header("Authorization", "Bearer ${refreshResp.access_token}").build()
+            response.request.newBuilder().header("Authorization", "******").build()
         } catch (e: Exception) {
             // Refresh failed, give up
             null

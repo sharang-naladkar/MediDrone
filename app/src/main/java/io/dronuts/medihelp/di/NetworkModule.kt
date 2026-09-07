@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.dronuts.medihelp.BuildConfig
 import io.dronuts.medihelp.auth.AuthRepository
 import io.dronuts.medihelp.auth.AuthRepositoryImpl
 import io.dronuts.medihelp.auth.SecureTokenStore
@@ -17,9 +18,7 @@ import io.dronuts.medihelp.mqtt.MockMqttClient
 import io.dronuts.medihelp.mqtt.PahoMqttClient
 import io.dronuts.medihelp.network.ApiService
 import io.dronuts.medihelp.network.AuthInterceptor
-import io.dronuts.medihelp.network.TokenAuthenticator
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -80,7 +79,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideIncidentRepository(api: ApiService, @ApplicationContext ctx: Context): IncidentRepository {
-        return if (BuildConfig.FLAVOR == "demo") MockIncidentRepository() else NetworkIncidentRepository(api, ctx)
-    }
+    fun provideNetworkIncidentRepository(api: ApiService, @ApplicationContext ctx: Context): NetworkIncidentRepository =
+        NetworkIncidentRepository(api, ctx)
 }

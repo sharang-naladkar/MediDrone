@@ -8,19 +8,19 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.IMqttToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
-import org.eclipse.paho.client.mqttv3.MqttClient
+import org.eclipse.paho.client.mqttv3.MqttClient as EclipseMqttClient
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.util.*
 
-class PahoMqttClient(private val context: Context, private val brokerUrl: String) : MqttClient(false) {
+class PahoMqttClient(private val context: Context, private val brokerUrl: String) : MqttClient {
     // Note: using Eclipse Paho; implement a lightweight wrapper using callbackFlow.
     private val clientId = "medihelp-client-" + UUID.randomUUID().toString().take(8)
-    private var client: MqttClient? = null
+    private var client: EclipseMqttClient? = null
 
     init {
         // brokerUrl is expected to be like wss://broker.example:8883 or tcp://...
-        client = MqttClient(brokerUrl, clientId, null)
+        client = EclipseMqttClient(brokerUrl, clientId, null)
     }
 
     override suspend fun connect() {

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import io.dronuts.medihelp.ui.components.StepProgress
 import io.dronuts.medihelp.viewmodel.IncidentViewModel
 
 @Composable
